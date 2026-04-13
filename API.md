@@ -1,11 +1,6 @@
 # Fashion Social API Documentation
 
-Base URL: `http://localhost:8000`
-
-Interactive docs available at `http://localhost:8000/docs` (Swagger UI).
-
----
-
+Backend Base URL: `http://localhost:8000`
 ## Getting Started
 
 ```bash
@@ -29,8 +24,6 @@ All seed users have the password `password123`.
 | deepnimma    | Deepesh Nimma | deepnimma@uga.edu       |
 | janedoe      | Jane Doe      | janedoe@gmail.com       |
 | alex_style   | Alex Kim      | alex.kim@outlook.com    |
-
----
 
 ## Authentication
 
@@ -60,9 +53,7 @@ Pass the token in the `Authorization` header:
 curl -H "Authorization: Bearer <token>" http://localhost:8000/posts/
 ```
 
-Tokens expire after 60 minutes.
-
----
+Tokens expire after 60 minutes. Editable in `backend/app/utils/auth.py`
 
 ## User Endpoints
 
