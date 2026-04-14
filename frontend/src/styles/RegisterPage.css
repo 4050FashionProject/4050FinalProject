@@ -1,0 +1,28 @@
+
+form {
+    flex-direction: column;
+    display: flex;
+}
+
+form h2 {
+    text-align: left;
+    margin: 4px 8px;
+}
+
+form button {
+    margin: 4px 4px;
+}
+
+form input {
+    margin: 4px 4px;
+}
+
+form a {
+    margin-top: 4px;
+    margin-bottom: 16px;
+}
+
+form {
+    max-width: 400px;
+    margin: auto;
+}
