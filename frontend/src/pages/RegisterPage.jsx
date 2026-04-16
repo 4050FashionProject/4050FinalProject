@@ -1,4 +1,4 @@
-import "./styles/RegisterPage.css";
+import "../styles/RegisterPage.css";
 import { useNavigate } from "react-router-dom";
 
 function RegisterPage() {

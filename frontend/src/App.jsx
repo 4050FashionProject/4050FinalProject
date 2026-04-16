@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import './App.css'
-import HomePage from './HomePage'
-import LoginPage from './LoginPage'
-import RegisterPage from "./RegisterPage";
+import "./styles/App.css";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
         <Route exact path="/register" element={<RegisterPage />} />
       </Routes>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
