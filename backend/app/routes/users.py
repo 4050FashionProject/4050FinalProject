@@ -1,7 +1,7 @@
 import re
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordRequestForm
+from pydantic import BaseModel
 
 from app.database import get_users_collection
 from app.models.user import FollowRequest, UserResponse, UserSignup, UserUpdate
@@ -11,6 +11,11 @@ from app.utils.validators import user_doc_to_response
 # /search/ must be registered before /{username} — FastAPI matches routes in order,
 # and a literal path like /search/ would otherwise be caught by the username param.
 router = APIRouter(prefix="/users")
+
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
 
 
 @router.post("/signup", status_code=200)
@@ -34,10 +39,10 @@ async def signup(body: UserSignup):
 
 
 @router.post("/login", status_code=200)
-async def login(form: OAuth2PasswordRequestForm = Depends()):
+async def login(body: LoginRequest):
     users = get_users_collection()
-    doc = await users.find_one({"username": form.username})
-    if not doc or not verify_password(form.password, doc["password"]):
+    doc = await users.find_one({"username": body.username})
+    if not doc or not verify_password(body.password, doc["password"]):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
     token = create_access_token({"sub": doc["username"]})
     return {"access_token": token, "token_type": "bearer"}
