@@ -22,3 +22,7 @@ logs:
 restart:
 	docker compose down
 	docker compose up --build -d
+
+# Seed backend
+seed:
+	uv run seed.py
