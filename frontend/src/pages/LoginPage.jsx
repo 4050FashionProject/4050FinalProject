@@ -13,7 +13,7 @@ function LoginPage() {
     event.preventDefault(); // Overrides default browser reload
     try {
       await login(username, password);
-      navigate("/");
+      navigate("/", { replace: true });
     } catch (error) {
       alert(error);
     }

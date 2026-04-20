@@ -11,8 +11,29 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setIsLoggedIn(false);
     setAccessToken(null);
+    setUser(null);
   };
-  const register = () => setUser(null);
+
+  const register = async (display_name, email, username, password) => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/users/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ display_name, email, username, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      alert(result);
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
+  };
 
   const login = async (username, password) => {
     try {
