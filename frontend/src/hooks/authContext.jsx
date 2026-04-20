@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { BACKEND_URL } from "../config";
 
 const AuthContext = createContext();
@@ -8,10 +8,49 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [accessToken, setAccessToken] = useState(null);
 
+  // Load auth state from localStorage on mount
+  useEffect(() => {
+    const storedToken = localStorage.getItem("accessToken");
+    const storedUser = localStorage.getItem("user");
+    const storedLoginStatus = localStorage.getItem("isLoggedIn");
+
+    if (storedToken && storedLoginStatus === "true") {
+      // Validate token by making a test request
+      fetch(`${BACKEND_URL}/users/${JSON.parse(storedUser).username}`, {
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            setAccessToken(storedToken);
+            setIsLoggedIn(true);
+            if (storedUser) {
+              setUser(JSON.parse(storedUser));
+            }
+          } else {
+            // Token is invalid, clear localStorage
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("user");
+            localStorage.removeItem("isLoggedIn");
+          }
+        })
+        .catch(() => {
+          // Network error or other issue, clear localStorage
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("user");
+          localStorage.removeItem("isLoggedIn");
+        });
+    }
+  }, []);
+
   const logout = () => {
     setIsLoggedIn(false);
     setAccessToken(null);
     setUser(null);
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("user");
+    localStorage.removeItem("isLoggedIn");
   };
 
   const register = async (display_name, email, username, password) => {
@@ -54,6 +93,9 @@ export const AuthProvider = ({ children }) => {
       await getUser(username, result.access_token);
       setIsLoggedIn(true);
 
+      localStorage.setItem("accessToken", result.access_token);
+      localStorage.setItem("isLoggedIn", "true");
+
       const TOKEN_EXPIRY_TIME = 60 * 60 * 1000;
       setTimeout(() => logout(), TOKEN_EXPIRY_TIME);
     } catch (error) {
@@ -75,6 +117,7 @@ export const AuthProvider = ({ children }) => {
       }
       const user = await response.json();
       setUser(user);
+      localStorage.setItem("user", JSON.stringify(user));
       console.log(user);
     } catch (error) {
       console.error(error.message);

@@ -2,7 +2,7 @@ import NavBar from "../components/NavBar";
 import { useAuth } from "../hooks/authContext";
 
 function HomePage() {
-  const { user } = useAuth();
+  const user = JSON.parse(localStorage.getItem("user"));
 
   return (
     <div>

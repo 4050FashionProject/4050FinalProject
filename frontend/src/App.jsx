@@ -17,7 +17,7 @@ function App() {
         <Route exact path="/register" element={<RegisterPage />} />
 
         {/** Protected Routes */}
-        <Route element={<ProtectedRoute isAuthenticated={isLoggedIn} />}>
+        <Route element={<ProtectedRoute />}>
           <Route exact path="/" element={<HomePage />} />
         </Route>
       </Routes>

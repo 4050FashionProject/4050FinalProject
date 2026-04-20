@@ -11,9 +11,19 @@ function RegisterPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Overrides default browser reload
+    try {
+      await register(displayName, email, username, password);
+      navigate("/", { replace: true });
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   return (
     <>
-      <form action="">
+      <form onSubmit={handleSubmit}>
         <h2>Sign Up</h2>
         <input
           placeholder="display name"

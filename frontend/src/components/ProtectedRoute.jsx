@@ -4,7 +4,7 @@ export default function ProtectedRoute({
   isAuthenticated,
   redirectPath = "/login",
 }) {
-  if (!isAuthenticated) {
+  if (!localStorage.getItem("isLoggedIn")) {
     return <Navigate to={redirectPath} replace />;
   }
   return <Outlet />;

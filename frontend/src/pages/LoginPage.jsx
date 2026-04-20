@@ -41,6 +41,7 @@ function LoginPage() {
         <a href="">forgot password?</a>
         <button
           className="secondary-button"
+          type="button"
           onClick={() => navigate("/register")}
         >
           Create new account
