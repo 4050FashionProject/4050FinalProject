@@ -2,9 +2,12 @@
 build:
 	docker compose build
  
-# Build and start all services in detached mode
+# Build and start all services in detached mode, then run backend tests
 deploy:
 	docker compose up --build -d
+	@echo "Waiting for backend to be ready..."
+	@until curl -sf http://localhost:8000/openapi.json > /dev/null; do sleep 1; done
+	uv run --group test pytest backend/tests -v
  
 # Stop and remove containers (keeps volumes)
 remove:

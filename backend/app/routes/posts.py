@@ -2,7 +2,7 @@ import uuid
 
 from fastapi import APIRouter, Depends, HTTPException
 
-from app.database import get_posts_collection
+from app.database import get_posts_collection, get_users_collection
 from app.models.post import PostCreate, PostDelete, PostUpdate
 from app.utils.auth import get_current_user
 
@@ -18,6 +18,9 @@ async def get_all_posts():
 
 @router.get("/user/{username}", status_code=200)
 async def get_user_posts(username: str):
+    users = get_users_collection()
+    if not await users.find_one({"username": username}, {"_id": 1}):
+        raise HTTPException(status_code=404, detail="User not found")
     posts = get_posts_collection()
     image_ids = [doc["image_id"] async for doc in posts.find({"creator": username}, {"image_id": 1})]
     return {"image_ids": image_ids}
