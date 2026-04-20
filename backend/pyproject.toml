@@ -14,3 +14,9 @@ dependencies = [
     "ruff>=0.15.9",
     "uvicorn>=0.43.0",
 ]
+
+[dependency-groups]
+test = [
+    "httpx>=0.28",
+    "pytest>=8",
+]
