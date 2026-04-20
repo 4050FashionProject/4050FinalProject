@@ -1,7 +1,8 @@
 :root {
   --text: #000;
   --text-h: #08060d;
-  --bg: #F3E3D0;
+  --paper: #F3E3D0;
+  --bg: #e4ba87;
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
   --accent: #D2C4B4;
@@ -31,7 +32,8 @@
   :root {
     --text: #000;
     --text-h: #f3f4f6;
-    --bg: #F3E3D0;
+    --paper: #F3E3D0;
+    --bg: #efd4b4;
     --border: #2e303a;
     --code-bg: #1f2028;
     --accent: #D2C4B4;
@@ -56,7 +58,7 @@ body {
   max-width: 100%;
   margin: 0 auto;
   text-align: center;
-  border-inline: 1px solid var(--border);
+  /*border-inline: 1px solid var(--border);*/
   min-height: 100svh;
   display: flex;
   flex-direction: column;

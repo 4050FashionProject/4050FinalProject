@@ -2,6 +2,12 @@
 form {
     flex-direction: column;
     display: flex;
+    background-color: var(--paper);
+    padding: 32px;
+    border-radius: 16px;
+    max-width: 400px;
+    margin: auto;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2); 
 }
 
 form h2 {
@@ -20,9 +26,4 @@ form input {
 form a {
     margin-top: 4px;
     margin-bottom: 16px;
-}
-
-form {
-    max-width: 400px;
-    margin: auto;
 }
