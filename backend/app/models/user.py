@@ -3,7 +3,7 @@ from pydantic import BaseModel, EmailStr, Field, field_validator
 
 
 class UserSignup(BaseModel):
-    username: str = Field(min_length=4, max_length=20, pattern=r"^[a-zA-Z_]+$")
+    username: str = Field(min_length=4, max_length=20, pattern=r"^[a-zA-Z_]+(_\d+)?$")
     display_name: str = Field(max_length=50)
     password: str = Field(min_length=8)
     email: EmailStr

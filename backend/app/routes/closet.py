@@ -12,7 +12,7 @@ async def get_closet(username: str, response: Response):
     users = get_users_collection()
     doc = await users.find_one({"username": username}, {"closet": 1})
     if not doc:
-        raise HTTPException(status_code=400, detail="User not found")
+        raise HTTPException(status_code=404, detail="User not found")
     closet = doc.get("closet", [])
     if not closet:
         # Mutate the response object to send 204 with no body — returning None from a
