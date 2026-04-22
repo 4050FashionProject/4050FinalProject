@@ -76,12 +76,18 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password) => {
     try {
+      const params = new URLSearchParams();
+      params.append("grant_type", "password");
+      params.append("username", username);
+      params.append("password", password);
+      params.append("scope", "read write");
+
       const response = await fetch(`${BACKEND_URL}/users/login`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: JSON.stringify({ username, password }),
+        body: params,
       });
 
       if (!response.ok) {

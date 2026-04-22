@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/NavBar.css";
 import CreatePostModal from "./CreatePostModal";
 import { useState } from "react";
+import MenuPopup from "./MenuPopup";
 
 function NavBar({ visible, current }) {
   const [open, setOpen] = useState(false);
@@ -30,9 +31,7 @@ function NavBar({ visible, current }) {
         <button className={classes[3]} onClick={() => navigate("/me")}>
           Me <img className="nav-icon" src="/me.svg" alt="me" />
         </button>
-        <button className="more">
-          <img src="/menu.svg" alt="more" />
-        </button>
+        <MenuPopup />
       </nav>
     )
   );

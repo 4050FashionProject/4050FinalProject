@@ -1,8 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
+import "../styles/MenuPopup.css";
+import { useAuth } from "../hooks/authContext";
+import { useNavigate } from "react-router-dom";
 
-function MenuPopup({ onLogout, onGoToSettings }) {
+function MenuPopup({ onGoToSettings }) {
   const [isOpen, setIsOpen] = useState(false);
   const popupRef = useRef(null);
+  const { logout } = useAuth();
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
@@ -39,21 +44,21 @@ function MenuPopup({ onLogout, onGoToSettings }) {
     onGoToSettings?.();
   };
 
-  const handleLogoutClick = () => {
-    closeMenu();
-    onLogout?.();
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
   };
 
   return (
     <div className="menu-popup" ref={popupRef}>
       <button
         type="button"
-        className="menu-popup-trigger"
+        className="menu-popup-trigger more"
         onClick={toggleMenu}
         aria-haspopup="menu"
         aria-expanded={isOpen}
       >
-        ☰
+        <img src="/menu.svg" alt="more" />
       </button>
 
       {isOpen && (
@@ -61,14 +66,16 @@ function MenuPopup({ onLogout, onGoToSettings }) {
           <button
             type="button"
             className="menu-popup-item"
-            onClick={handleSettingsClick}
+            onClick={() => {
+              navigate("/settings");
+            }}
           >
             Settings
           </button>
           <button
             type="button"
             className="menu-popup-item logout"
-            onClick={handleLogoutClick}
+            onClick={handleLogout}
           >
             Logout
           </button>
@@ -79,4 +86,3 @@ function MenuPopup({ onLogout, onGoToSettings }) {
 }
 
 export default MenuPopup;
-

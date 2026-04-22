@@ -8,6 +8,7 @@ import ClosetPage from "./pages/ClosetPage";
 import MePage from "./pages/MePage";
 import { useAuth } from "./hooks/authContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import SettingsPage from "./pages/SettingsPage";
 
 function App() {
   const { isLoggedIn } = useAuth();
@@ -25,6 +26,7 @@ function App() {
           <Route exact path="/explore" element={<ExplorePage />} />
           <Route exact path="/closet" element={<ClosetPage />} />
           <Route exact path="/me" element={<MePage />} />
+          <Route exact path="/settings" element={<SettingsPage />} />
         </Route>
       </Routes>
     </Router>
