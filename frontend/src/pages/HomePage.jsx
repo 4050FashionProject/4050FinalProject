@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import MenuPopup from "../components/MenuPopup";
+import "../styles/HomePage.css"
 
 function HomePage() {
   const navigate = useNavigate();

@@ -6,6 +6,7 @@ class Coordinate(BaseModel):
     x: int
     y: int
     link: str
+    name: str
 
 
 class PostCreate(BaseModel):
@@ -14,6 +15,7 @@ class PostCreate(BaseModel):
     caption: str
     hashtags: list[str]
     creator: str
+    likes: int
 
 
 class PostUpdate(BaseModel):
@@ -21,12 +23,13 @@ class PostUpdate(BaseModel):
     coordinates: Optional[list[Coordinate]] = None
     hashtags: Optional[list[str]] = None
     caption: Optional[str] = None
+    likes: Optional[int] = None
 
     # mode="after" runs once all individual fields have been validated and the model
     # instance is fully assembled, so we can inspect the final field values together.
     @model_validator(mode="after")
     def at_least_one_field(self):
-        if self.coordinates is None and self.hashtags is None and self.caption is None:
+        if self.coordinates is None and self.hashtags is None and self.caption is None and self.likes is None:
             raise ValueError("At least one of coordinates, hashtags, or caption must be provided")
         return self
 

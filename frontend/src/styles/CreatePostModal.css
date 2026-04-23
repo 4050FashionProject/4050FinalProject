@@ -1,0 +1,69 @@
+dialog {
+    padding: 16px;
+    border: none;
+    border-radius: 16px;
+    background-color: var(--paper);
+    flex-direction: column;
+    inset: 0;
+    margin: auto;
+    width: 80%;
+    max-width: 500px;
+    height: fit-content;
+}
+
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+dialog form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+dialog textarea {
+    font-size: 1.2em;
+    border-radius: 8px;
+    padding: 8px;
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    font-family: "Inter", sans-serif;
+    resize: vertical;
+    min-height: 100px;
+}
+
+dialog input {
+    font-size: 1.2em;
+    border-radius: 8px;
+    padding: 8px;
+    background-color: var(--accent);
+    color: white;
+    border: none;
+}
+
+/* Style the TagsInput component */
+.rti--container {
+    padding: 0;
+    gap: 8px;
+    background-color: var(--accent);
+}
+
+.rti--input {
+    font-size: 1.2em;
+    border-radius: 8px;
+    padding: 8px;
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    font-family: "Inter", sans-serif;
+}
+
+.rti--tag {
+    background-color: var(--contrast);
+    color: white;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 0.9em;
+    font-weight: 500;
+}

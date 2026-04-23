@@ -5,7 +5,7 @@ import { useState } from "react";
 import MenuPopup from "./MenuPopup";
 
 function NavBar({ visible, current }) {
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   let classes = ["nav-btn", "nav-btn", "nav-btn", "nav-btn"];
   classes[current] = "nav-btn current";
@@ -19,11 +19,10 @@ function NavBar({ visible, current }) {
           Explore <img className="nav-icon" src="/browse.svg" alt="explore" />
         </button>
         <button
-          className={`nav-btn${open ? " current" : ""}`}
-          onClick={() => setOpen(!open)}
+          className={`nav-btn${isOpen ? " current" : ""}`}
+          onClick={() => setIsOpen(!isOpen)}
         >
           Create <img className="nav-icon" src="/create.svg" alt="create" />
-          <CreatePostModal isOpen={open} onClose={() => setOpen(false)} />
         </button>
         <button className={classes[2]} onClick={() => navigate("/closet")}>
           Closet <img className="nav-icon" src="/dresser.svg" alt="closet" />
@@ -32,6 +31,7 @@ function NavBar({ visible, current }) {
           Me <img className="nav-icon" src="/me.svg" alt="me" />
         </button>
         <MenuPopup />
+        <CreatePostModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
       </nav>
     )
   );
