@@ -12,8 +12,11 @@ router = APIRouter(prefix="/posts")
 @router.get("/", status_code=200)
 async def get_all_posts():
     posts = get_posts_collection()
-    image_ids = [doc["image_id"] async for doc in posts.find({}, {"image_id": 1})]
-    return {"image_ids": image_ids}
+    all_posts = []
+    async for doc in posts.find({}):
+        doc.pop("_id", None)
+        all_posts.append(doc)
+    return {"posts": all_posts}
 
 
 @router.get("/user/{username}", status_code=200)
@@ -22,8 +25,11 @@ async def get_user_posts(username: str):
     if not await users.find_one({"username": username}, {"_id": 1}):
         raise HTTPException(status_code=404, detail="User not found")
     posts = get_posts_collection()
-    image_ids = [doc["image_id"] async for doc in posts.find({"creator": username}, {"image_id": 1})]
-    return {"image_ids": image_ids}
+    user_posts = []
+    async for doc in posts.find({"creator": username}):
+        doc.pop("_id", None)
+        user_posts.append(doc)
+    return {"posts": user_posts}
 
 
 @router.post("/", status_code=200)

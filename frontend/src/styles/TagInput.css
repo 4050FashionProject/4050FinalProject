@@ -1,0 +1,57 @@
+.rti--container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    padding: 8px;
+    background-color: var(--accent);
+    border-radius: 8px;
+    font-size: 1.2em;
+    border: none;
+}
+
+.rti--input {
+    flex: 1;
+    min-width: 100px;
+    font-size: 1.2em;
+    padding: 0;
+    background-color: transparent;
+    color: white;
+    border: none;
+    outline: none;
+}
+
+.rti--input::placeholder {
+    /*color: rgba(255, 255, 255, 0.7);*/
+}
+
+.rti--tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--contrast);
+    color: white;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 0.9em;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.rti--tag button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    font-size: 1em;
+    line-height: 1;
+    transition: opacity 0.2s ease;
+}
+
+.rti--tag button:hover {
+    opacity: 0.7;
+}

@@ -55,7 +55,6 @@ export default function LikeButton({
         aria-label={liked ? "Unlike post" : "Like post"}
       >
         <span className="like-icon">{liked ? "♥" : "♡"}</span>
-        <span className="like-text">{liked ? "Liked" : "Like"}</span>
         <span className="like-count">{likeCount}</span>
       </button>
 
