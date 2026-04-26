@@ -3,24 +3,36 @@ import NavBar from "../components/NavBar";
 import PostView from "../components/PostView";
 import { BACKEND_URL } from "../config";
 import { useAuth } from "../hooks/authContext";
+import { useParams, useNavigate } from 'react-router-dom';
 
-function MePage() {
+function ProfilePage() {
+  const { username } = useParams();
+  const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  const { logout } = useAuth();
 
   useEffect(() => {
-    if (!user) {
-      setUser(JSON.parse(localStorage.getItem("user")));
-      setLoading(false);
-      return;
-    }
-
     const fetchUserPosts = async () => {
+      // try to get the current user
+      try {
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        setUser(storedUser);
+        setLoading(false);
+        if (!storedUser) {
+          await logout();
+          navigate("/login");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+
+      // try to get all the fetches for the username at the route
       try {
         setLoading(true);
-        const response = await fetch(`${BACKEND_URL}/posts/user/${user.username}`);
+        const response = await fetch(`${BACKEND_URL}/posts/user/${username}`);
         if (!response.ok) {
           throw new Error("Failed to fetch your posts");
         }
@@ -35,19 +47,9 @@ function MePage() {
     };
 
     fetchUserPosts();
-  }, [user]);
+  }, []);
 
-  if (!user) {
-    return (
-      <div>
-        <h1>Me</h1>
-        <p>Please log in to view your posts</p>
-        <NavBar visible={true} current={3} />
-      </div>
-    );
-  }
-
-  return (
+  return loading ? <>Loading</> : (
     <div>
       <h1>{user.username}'s Posts</h1>
       {loading && <p>Loading your posts...</p>}
@@ -63,4 +65,4 @@ function MePage() {
   );
 }
 
-export default MePage;
+export default ProfilePage;

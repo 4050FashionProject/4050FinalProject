@@ -17,7 +17,6 @@ function ExplorePage() {
           throw new Error("Failed to fetch posts");
         }
         const data = await response.json();
-        console.log("Fetched data:", data);
         setPosts(data.posts || []);
       } catch (err) {
         setError(err.message);

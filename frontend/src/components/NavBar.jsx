@@ -1,15 +1,36 @@
-import { useNavigate } from "react-router-dom";
 import "../styles/NavBar.css";
 import CreatePostModal from "./CreatePostModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/authContext";
 import MenuPopup from "./MenuPopup";
 
 function NavBar({ visible, current }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [username, setUsername] = useState(null);
+  const { logout } = useAuth();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+
   let classes = ["nav-btn", "nav-btn", "nav-btn", "nav-btn"];
   classes[current] = "nav-btn current";
-  return (
+
+  const getUser = async () => {
+    try {
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      setUsername(storedUser.username);
+      setLoading(false);
+    } catch (error) {
+      await logout();
+      navigate("/login");
+    }
+  }
+
+  useEffect(() => {
+    getUser();
+  }, [username])
+
+  return loading ? <>Loading</> : (
     visible && (
       <nav>
         <button className={classes[0]} onClick={() => navigate("/")}>
@@ -27,7 +48,7 @@ function NavBar({ visible, current }) {
         <button className={classes[2]} onClick={() => navigate("/closet")}>
           Closet <img className="nav-icon" src="/dresser.svg" alt="closet" />
         </button>
-        <button className={classes[3]} onClick={() => navigate("/me")}>
+        <button className={classes[3]} onClick={() => navigate(`/user/${username}`)}>
           Me <img className="nav-icon" src="/me.svg" alt="me" />
         </button>
         <MenuPopup />
