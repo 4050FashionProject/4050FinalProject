@@ -1,0 +1,23 @@
+.creator {
+    color: var(--contrast);
+}
+
+.creator:hover {
+    text-decoration: underline;
+}
+
+.post-top-bar {
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.post-container {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    background-color: var(--paper);
+    margin-bottom: 16px;
+}

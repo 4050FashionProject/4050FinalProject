@@ -2,10 +2,13 @@ import { useState } from "react";
 import { BACKEND_URL } from "../config";
 import { useAuth } from "../hooks/authContext";
 import SaveButton from "./SaveButton";
+import "../styles/PostView.css"
+import { useNavigate } from "react-router-dom";
 
 function PostView({ post: { image_id, image, coordinates, caption, hashtags, creator, likes }, currentUser, onPostDeleted }) {
   const [deleting, setDeleting] = useState(false);
   const { accessToken } = useAuth();
+  const navigate = useNavigate();
 
   const isPostOwner = currentUser?.username === creator;
 
@@ -40,15 +43,19 @@ function PostView({ post: { image_id, image, coordinates, caption, hashtags, cre
   };
 
   return (
-    <div style={{
-      border: "1px solid var(--border)",
-      borderRadius: "8px",
-      padding: "16px",
-      backgroundColor: "var(--paper)",
-      marginBottom: "16px"
-    }}>
-      <div style={{ marginBottom: "12px" }}>
-        <h3 style={{ margin: "0 0 8px 0", color: "var(--contrast)" }}>{creator}</h3>
+    <div className="post-container">
+      <div className="post-top-bar">
+        <h3 className="creator" onClick={() => navigate(`/user/${creator}`)}>{creator}</h3>
+        {isPostOwner && (
+          <button
+            className="secondary-button"
+            onClick={handleDelete}
+            disabled={deleting}
+            style={{ padding: "8px 16px" }}
+          >
+            {deleting ? "Deleting..." : "Delete"}
+          </button>
+        )}
       </div>
 
       {image && (
@@ -67,9 +74,11 @@ function PostView({ post: { image_id, image, coordinates, caption, hashtags, cre
       )}
 
       {caption && (
-        <p style={{ margin: "8px 0", color: "var(--text)" }}>
-          {caption}
-        </p>
+        <div>
+          <p style={{ margin: "8px 0", color: "var(--text)" }}>
+            {caption}
+          </p>
+        </div>
       )}
 
       {hashtags && hashtags.length > 0 && (
@@ -97,16 +106,6 @@ function PostView({ post: { image_id, image, coordinates, caption, hashtags, cre
         justifyContent: "space-between"
       }}>
         <SaveButton />
-        {isPostOwner && (
-          <button
-            className="secondary-button"
-            onClick={handleDelete}
-            disabled={deleting}
-            style={{ padding: "8px 16px" }}
-          >
-            {deleting ? "Deleting..." : "Delete"}
-          </button>
-        )}
       </div>
     </div>
   );
