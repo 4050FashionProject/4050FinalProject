@@ -12,7 +12,7 @@ function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, user: currentUser } = useAuth();
 
   useEffect(() => {
     const fetchUserPosts = async () => {
@@ -49,6 +49,10 @@ function ProfilePage() {
     fetchUserPosts();
   }, []);
 
+  const handlePostDeleted = (imageId) => {
+    setPosts(posts.filter(post => post.image_id !== imageId));
+  };
+
   return loading ? <>Loading</> : (
     <div>
       <h1>{user.username}'s Posts</h1>
@@ -57,7 +61,7 @@ function ProfilePage() {
       {!loading && posts.length === 0 && <p>You haven't posted anything yet</p>}
       <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
         {posts.map((post) => (
-          <PostView key={post.image_id} post={post} />
+          <PostView key={post.image_id} post={post} currentUser={currentUser} onPostDeleted={handlePostDeleted} />
         ))}
       </div>
       <NavBar visible={true} current={3} />
