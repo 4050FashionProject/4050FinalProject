@@ -1,5 +1,5 @@
 import "../styles/CreatePostModal.css";
-import TagInput from "./TagInput";
+import HashTagInput from "./HashTagInput";
 import { useRef, useEffect, useState, useContext } from "react";
 import { BACKEND_URL } from "../config";
 import { useAuth } from "../hooks/authContext";
@@ -78,7 +78,7 @@ function CreatePostModal({ isOpen, onClose }) {
       <form>
         <img id="postimg" src="placeholder.svg" alt="Your uploaded image will appear here" />
         <textarea ref={captionRef} name="caption" id="caption" maxLength={500} placeholder="enter your caption here"></textarea>
-        <TagInput
+        <HashTagInput
           value={hashtags}
           onChange={setHashtags}
           name="hashtags"

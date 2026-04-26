@@ -124,7 +124,6 @@ export const AuthProvider = ({ children }) => {
       const user = await response.json();
       setUser(user);
       localStorage.setItem("user", JSON.stringify(user));
-      console.log(user);
     } catch (error) {
       console.error(error.message);
     }

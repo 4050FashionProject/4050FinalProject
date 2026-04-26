@@ -1,4 +1,4 @@
-function Tag({ text, remove, disabled, className }) {
+function HashTag({ text, remove, disabled, className }) {
   const handleOnRemove = e => {
     e.stopPropagation();
     remove(text);
@@ -20,4 +20,4 @@ function Tag({ text, remove, disabled, className }) {
   );
 }
 
-export default Tag;
+export default HashTag;

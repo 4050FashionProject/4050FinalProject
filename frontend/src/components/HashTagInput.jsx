@@ -1,9 +1,9 @@
 import { useState } from "react";
 import useDidUpdateEffect from "../hooks/useDidUpdateEffect";
-import Tag from "./Tag";
-import "../styles/TagInput.css";
+import HashTag from "./HashTag";
+import "../styles/HashTagInput.css";
 
-function TagInput({
+function HashTagInput({
   name,
   placeHolder,
   value,
@@ -65,7 +65,7 @@ function TagInput({
   return (
     <div className="rti--container" aria-labelledby={name}>
       {tags.map(tag => (
-        <Tag
+        <HashTag
           key={tag}
           className="rti--tag"
           text={tag}
@@ -88,4 +88,4 @@ function TagInput({
   );
 };
 
-export default TagInput;
+export default HashTagInput;

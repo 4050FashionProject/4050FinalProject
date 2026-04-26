@@ -8,11 +8,11 @@ function MePage() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     if (!user) {
-      setUser(localStorage.getItem("user"));
+      setUser(JSON.parse(localStorage.getItem("user")));
       setLoading(false);
       return;
     }
