@@ -55,7 +55,7 @@ function ProfilePage() {
 
   return loading ? <>Loading</> : (
     <div>
-      <h1>{user.username}'s Posts</h1>
+      <h1>{username}'s Posts</h1>
       {loading && <p>Loading your posts...</p>}
       {error && <p style={{ color: "red" }}>Error: {error}</p>}
       {!loading && posts.length === 0 && <p>You haven't posted anything yet</p>}

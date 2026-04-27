@@ -7,10 +7,30 @@ import { useNavigate } from "react-router-dom";
 
 function PostView({ post: { image_id, image, coordinates, caption, hashtags, creator, likes }, currentUser, onPostDeleted }) {
   const [deleting, setDeleting] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const { accessToken } = useAuth();
   const navigate = useNavigate();
 
   const isPostOwner = currentUser?.username === creator;
+
+  // Parse and validate base64 image data
+  const getImageSrc = () => {
+    if (!image) return null;
+
+    // If it's already a data URI, use it directly
+    if (typeof image === "string" && image.startsWith("data:")) {
+      return image;
+    }
+
+    // If it's a base64 string without the data URI prefix, add it
+    if (typeof image === "string") {
+      return `data:image/jpeg;base64,${image}`;
+    }
+
+    return null;
+  };
+
+  const imageSrc = getImageSrc();
 
   const handleDelete = async () => {
     if (!window.confirm("Are you sure you want to delete this post?")) {

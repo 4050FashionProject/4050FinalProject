@@ -3,10 +3,12 @@ import HashTagInput from "./HashTagInput";
 import { useRef, useEffect, useState, useContext } from "react";
 import { BACKEND_URL } from "../config";
 import { useAuth } from "../hooks/authContext";
+import ImageUploader from "./ImageUploader";
 
 function CreatePostModal({ isOpen, onClose }) {
   const [hashtags, setHashtags] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [imageData, setImageData] = useState(null);
   const dialogRef = useRef(null);
   const captionRef = useRef(null);
   const { accessToken, user } = useAuth();
@@ -17,6 +19,10 @@ function CreatePostModal({ isOpen, onClose }) {
       dialog.showModal();
     } else {
       dialog.close();
+      // Reset form when modal closes
+      captionRef.current.value = "";
+      setHashtags([]);
+      setImageData(null);
     }
   }, [isOpen]);
 
@@ -35,6 +41,11 @@ function CreatePostModal({ isOpen, onClose }) {
       return;
     }
 
+    if (!imageData) {
+      alert("Please upload an image");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -45,7 +56,7 @@ function CreatePostModal({ isOpen, onClose }) {
           Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
-          image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23cccccc' width='400' height='400'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23999' font-size='24'%3EPlaceholder Image%3C/text%3E%3C/svg%3E",
+          image: imageData,
           coordinates: [],
           caption: caption,
           hashtags: hashtags,
@@ -59,6 +70,7 @@ function CreatePostModal({ isOpen, onClose }) {
         alert("Post created successfully!");
         captionRef.current.value = "";
         setHashtags([]);
+        setImageData(null);
         onClose();
       } else {
         const error = await response.json();
@@ -76,7 +88,7 @@ function CreatePostModal({ isOpen, onClose }) {
     <dialog ref={dialogRef} onCancel={onClose} id="createPostModal">
       <h1>Create Post</h1>
       <form>
-        <img id="postimg" src="placeholder.svg" alt="Your uploaded image will appear here" />
+        <ImageUploader onImageSelect={setImageData} />
         <textarea ref={captionRef} name="caption" id="caption" maxLength={500} placeholder="enter your caption here"></textarea>
         <HashTagInput
           value={hashtags}
