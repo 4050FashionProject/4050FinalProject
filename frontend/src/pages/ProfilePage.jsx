@@ -59,7 +59,7 @@ function ProfilePage() {
       {loading && <p>Loading your posts...</p>}
       {error && <p style={{ color: "red" }}>Error: {error}</p>}
       {!loading && posts.length === 0 && <p>You haven't posted anything yet</p>}
-      <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "16px", width: "100%", maxWidth: "600px", margin: "0 auto" }}>
         {posts.map((post) => (
           <PostView key={post.image_id} post={post} currentUser={currentUser} onPostDeleted={handlePostDeleted} />
         ))}

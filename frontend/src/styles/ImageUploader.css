@@ -1,0 +1,15 @@
+.uploader {
+    position: relative;
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+    width: 300px;
+}
+
+.preview {
+    cursor: pointer;
+    width: 100%;
+    display: block;
+}

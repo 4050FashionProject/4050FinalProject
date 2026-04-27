@@ -1,0 +1,56 @@
+.link-tag {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    border: 2px solid #ddd;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.link-tag img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    transition: opacity 0.3s ease;
+}
+
+.link-tag-label {
+    position: absolute;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.link-tag:hover {
+    width: 56px;
+    height: 56px;
+    background-color: #fff;
+    border-color: #999;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.link-tag:hover .link-tag-label {
+    display: block;
+}
+
+.link-tag:active {
+    transform: translate(-50%, -50%) scale(0.95);
+}
