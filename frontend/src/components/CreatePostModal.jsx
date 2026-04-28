@@ -7,6 +7,7 @@ import ImageUploader from "./ImageUploader";
 
 function CreatePostModal({ isOpen, onClose }) {
   const [hashtags, setHashtags] = useState([]);
+  const [coordinates, setCoordinates] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [imageData, setImageData] = useState(null);
   const dialogRef = useRef(null);
@@ -23,6 +24,7 @@ function CreatePostModal({ isOpen, onClose }) {
       captionRef.current.value = "";
       setHashtags([]);
       setImageData(null);
+      setCoordinates([]);
     }
   }, [isOpen]);
 
@@ -57,7 +59,7 @@ function CreatePostModal({ isOpen, onClose }) {
         },
         body: JSON.stringify({
           image: imageData,
-          coordinates: [],
+          coordinates: coordinates,
           caption: caption,
           hashtags: hashtags,
           creator: user.username,
@@ -88,7 +90,7 @@ function CreatePostModal({ isOpen, onClose }) {
     <dialog ref={dialogRef} onCancel={onClose} id="createPostModal">
       <h1>Create Post</h1>
       <form>
-        <ImageUploader onImageSelect={setImageData} />
+        <ImageUploader onImageSelect={setImageData} onCoordinatesChange={setCoordinates} />
         <textarea ref={captionRef} name="caption" id="caption" maxLength={500} placeholder="enter your caption here"></textarea>
         <HashTagInput
           value={hashtags}

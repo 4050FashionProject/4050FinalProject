@@ -20,4 +20,5 @@
     padding: 16px;
     background-color: var(--paper);
     margin-bottom: 16px;
+    position: relative;
 }

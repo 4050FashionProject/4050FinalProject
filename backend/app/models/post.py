@@ -3,8 +3,8 @@ from pydantic import BaseModel, model_validator
 
 
 class Coordinate(BaseModel):
-    x: int
-    y: int
+    x: float
+    y: float
     link: str
     name: str
 

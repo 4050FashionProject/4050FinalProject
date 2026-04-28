@@ -1,9 +1,13 @@
 import "../styles/LinkTag.css";
 
-function LinkTag({ name, link, position }) {
+function LinkTag({ name, link, position, x, y }) {
+    // Handle both position object and individual x,y props
+    const xPos = position?.x ?? x ?? 0;
+    const yPos = position?.y ?? y ?? 0;
+    
     const style = {
-        left: `${position.x * 100}%`,
-        top: `${position.y * 100}%`,
+        left: `${xPos * 100}%`,
+        top: `${yPos * 100}%`,
     };
 
     return (

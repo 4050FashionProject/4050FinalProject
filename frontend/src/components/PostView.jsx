@@ -4,8 +4,9 @@ import { useAuth } from "../hooks/authContext";
 import SaveButton from "./SaveButton";
 import "../styles/PostView.css"
 import { useNavigate } from "react-router-dom";
+import LinkTag from "./LinkTag";
 
-function PostView({ post: { image_id, image, coordinates, caption, hashtags, creator, likes }, currentUser, onPostDeleted }) {
+function PostView({ post: { image_id, image, coordinates = [], caption, hashtags, creator, likes }, currentUser, onPostDeleted }) {
   const [deleting, setDeleting] = useState(false);
   const [imageError, setImageError] = useState(false);
   const { accessToken } = useAuth();
@@ -79,18 +80,32 @@ function PostView({ post: { image_id, image, coordinates, caption, hashtags, cre
       </div>
 
       {image && (
-        <img
-          src={image}
-          alt={caption}
-          style={{
-            width: "100%",
-            height: "auto",
-            borderRadius: "8px",
-            marginBottom: "12px",
-            maxHeight: "400px",
-            objectFit: "cover"
-          }}
-        />
+        <div style={{ position: "relative", display: "inline-block", width: "100%" }}>
+          <img
+            src={imageSrc}
+            alt={caption}
+            style={{
+              width: "100%",
+              height: "auto",
+              borderRadius: "8px",
+              marginBottom: "12px",
+              maxHeight: "400px",
+              objectFit: "cover",
+              display: "block"
+            }}
+          />
+          {coordinates && coordinates.map((coord, idx) => {
+            const position = coord.position || { x: coord.x, y: coord.y };
+            return (
+              <LinkTag
+                key={idx}
+                name={coord.name}
+                link={coord.link}
+                position={position}
+              />
+            );
+          })}
+        </div>
       )}
 
       {caption && (

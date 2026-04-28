@@ -7,7 +7,8 @@ function ImageUploader({ onImageSelect, onCoordinatesChange }) {
   const [preview, setPreview] = useState();
   const [fileName, setFileName] = useState();
   const [coordinates, setCoordinates] = useState([]);
-  const [inputPosition, setInputPosition] = useState(null);
+  const [inputPositionX, setInputPositionX] = useState(null);
+  const [inputPositionY, setInputPositionY] = useState(null);
 
   function handleChange(e) {
     const file = e.target.files[0];
@@ -32,18 +33,21 @@ function ImageUploader({ onImageSelect, onCoordinatesChange }) {
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
 
-    setInputPosition({ x: Math.max(0, Math.min(1, x)), y: Math.max(0, Math.min(1, y)) });
+    setInputPositionX(Math.max(0, Math.min(1, x)))
+    setInputPositionY(Math.max(0, Math.min(1, y)));
   }
 
-  function handleTagAdd(name, link, position) {
-    const newCoordinates = [...coordinates, { name, link, position }];
+  function handleTagAdd(name, link, x, y) {
+    const newCoordinates = [...coordinates, { name, link, x, y }];
     setCoordinates(newCoordinates);
     onCoordinatesChange?.(newCoordinates);
-    setInputPosition(null);
+    setInputPositionX(null);
+    setInputPositionY(null);
   }
 
   function handleTagClear() {
-    setInputPosition(null);
+    setInputPositionX(null);
+    setInputPositionY(null);
   }
 
   return (
@@ -55,9 +59,9 @@ function ImageUploader({ onImageSelect, onCoordinatesChange }) {
         <div className="image-container">
           <img className="preview" onClick={handleClick} src={preview} alt="Uploaded preview" />
           {coordinates.map((coord, idx) => (
-            <LinkTag key={idx} name={coord.name} link={coord.link} position={coord.position} />
+            <LinkTag key={idx} name={coord.name} link={coord.link} x={coord.x} y={coord.y} />
           ))}
-          {inputPosition && <LinkTagInput position={inputPosition} onTagAdd={handleTagAdd} onTagClear={handleTagClear} />}
+          {inputPositionX && inputPositionY && <LinkTagInput x={inputPositionX} y={inputPositionY} onTagAdd={handleTagAdd} onTagClear={handleTagClear} />}
         </div>
       )}
     </div>

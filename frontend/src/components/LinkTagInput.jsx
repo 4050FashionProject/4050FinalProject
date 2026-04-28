@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../styles/LinkTagInput.css";
 
-function LinkTagInput({ position, onTagAdd, onTagClear }) {
+function LinkTagInput({ x, y, onTagAdd, onTagClear }) {
   const [inputName, setInputName] = useState("");
   const [inputLink, setInputLink] = useState("");
 
@@ -9,7 +9,7 @@ function LinkTagInput({ position, onTagAdd, onTagClear }) {
     e.preventDefault();
     e.stopPropagation();
     if (inputName.trim() && inputLink.trim()) {
-      onTagAdd?.(inputName, inputLink, position);
+      onTagAdd?.(inputName, inputLink, x, y);
       setInputName("");
       setInputLink("");
     }
@@ -24,8 +24,8 @@ function LinkTagInput({ position, onTagAdd, onTagClear }) {
   }
 
   const style = {
-    left: `${position.x * 100}%`,
-    top: `${position.y * 100}%`,
+    left: `${x * 100}%`,
+    top: `${y * 100}%`,
   };
 
   return (
