@@ -16,7 +16,7 @@ async def get_all_posts():
     async for doc in posts.find({}):
         doc.pop("_id", None)
         all_posts.append(doc)
-    return {"posts": all_posts}
+    return {"posts": all_posts, "image_ids": [p["image_id"] for p in all_posts]}
 
 
 @router.get("/user/{username}", status_code=200)
@@ -29,7 +29,7 @@ async def get_user_posts(username: str):
     async for doc in posts.find({"creator": username}):
         doc.pop("_id", None)
         user_posts.append(doc)
-    return {"posts": user_posts}
+    return {"posts": user_posts, "image_ids": [p["image_id"] for p in user_posts]}
 
 
 @router.post("/", status_code=200)

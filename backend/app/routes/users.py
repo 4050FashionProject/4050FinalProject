@@ -84,7 +84,7 @@ async def get_user(username: str):
     users = get_users_collection()
     doc = await users.find_one({"username": username})
     if not doc:
-        raise HTTPException(status_code=400, detail="User not found")
+        raise HTTPException(status_code=404, detail="User not found")
     return user_doc_to_response(doc)
 
 
@@ -112,5 +112,5 @@ async def get_following(username: str):
     users = get_users_collection()
     doc = await users.find_one({"username": username}, {"followed_users": 1})
     if not doc:
-        raise HTTPException(status_code=400, detail="User not found")
+        raise HTTPException(status_code=404, detail="User not found")
     return {"followed_users": doc.get("followed_users", [])}

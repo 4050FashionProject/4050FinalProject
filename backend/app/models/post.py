@@ -6,7 +6,7 @@ class Coordinate(BaseModel):
     x: float
     y: float
     link: str
-    name: str
+    name: Optional[str] = None
 
 
 class PostCreate(BaseModel):
