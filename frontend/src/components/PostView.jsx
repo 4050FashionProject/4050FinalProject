@@ -140,7 +140,18 @@ function PostView({ post: { image_id, image, coordinates = [], caption, hashtags
         paddingTop: "12px",
         justifyContent: "space-between"
       }}>
-        <SaveButton />
+        <SaveButton
+          postId={image_id}
+          isInitiallySaved={false} // update later if backend supports it
+          onSaveChange={async ({ postId, isSaved }) => {
+            await fetch(`${BACKEND_URL}/posts/${postId}/save`, {
+              method: isSaved ? "POST" : "DELETE",
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            });
+          }}
+        />
       </div>
     </div>
   );
